@@ -1,0 +1,710 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Штаб мастер-классов АК</title><meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F6F2F0; --surface:#FFFFFF; --surface-2:#FBF8F7; --ink:#241A1E; --muted:#7D6C72; --line:#E7DCDF; --line-2:#F1E9EB;
+  --accent:#B8236B; --accent-ink:#FFFFFF; --accent-soft:#F8E4EC; --accent-2:#E89A24; --accent-2-soft:#FCEFD9;
+  --good:#2F8F5B; --good-soft:#E3F3EA; --warn:#C98A0A; --warn-soft:#FBF1D8; --bad:#C43E33; --bad-soft:#FAE3E0; --info:#4E6FB3; --info-soft:#E6ECF8;
+  --shadow:0 10px 30px rgba(60,20,35,.10); --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1A1417; --surface:#241C1F; --surface-2:#2B2226; --ink:#F5ECEF; --muted:#AB9AA0; --line:#3B3035; --line-2:#332A2E;
+    --accent:#EA5E9E; --accent-ink:#1A1417; --accent-soft:#3D2331; --accent-2:#F3B24E; --accent-2-soft:#3E3020;
+    --good:#5CC48A; --good-soft:#1F3A2C; --warn:#E8B44A; --warn-soft:#3E3320; --bad:#EF7A6E; --bad-soft:#442423; --info:#8FA8E0; --info-soft:#26304A;
+    --shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1A1417; --surface:#241C1F; --surface-2:#2B2226; --ink:#F5ECEF; --muted:#AB9AA0; --line:#3B3035; --line-2:#332A2E;
+  --accent:#EA5E9E; --accent-ink:#1A1417; --accent-soft:#3D2331; --accent-2:#F3B24E; --accent-2-soft:#3E3020;
+  --good:#5CC48A; --good-soft:#1F3A2C; --warn:#E8B44A; --warn-soft:#3E3320; --bad:#EF7A6E; --bad-soft:#442423; --info:#8FA8E0; --info-soft:#26304A;
+  --shadow:0 10px 30px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font:700 20px/1.1 Unbounded,Manrope,sans-serif;letter-spacing:-.01em}
+h2{font:700 15px/1.2 Manrope,sans-serif}
+h3{font:700 13px/1.2 Manrope,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+textarea{min-height:64px;resize:vertical}
+a{color:var(--accent)}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.top-in{max-width:1280px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff;font:700 15px Unbounded,sans-serif}
+.brand small{display:block;color:var(--muted);font-size:12px}
+nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav button{background:transparent;border:0;padding:8px 11px;border-radius:9px;font-weight:600;color:var(--muted)}
+nav button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+nav button .cnt{display:inline-block;min-width:18px;padding:0 5px;margin-left:6px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font-size:11px;text-align:center}
+nav button .cnt:empty,nav button .cnt.zero{display:none}
+.sync{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--warn)}
+.dot.on{background:var(--good)}
+main{max-width:1280px;margin:0 auto;padding:20px}
+section[hidden]{display:none}
+.grid{display:grid;gap:14px}
+.tiles{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.tile .v{font:700 26px/1 Unbounded,Manrope,sans-serif;margin:6px 0 4px}
+.tile.alert{border-color:var(--warn)}
+.tile .sub{font-size:12px;color:var(--muted)}
+.two{grid-template-columns:2fr 1fr}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.toolbar input,.toolbar select{width:auto;min-width:140px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:8px 12px;font-weight:600}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.small{padding:5px 9px;font-size:12px;border-radius:7px}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.month{margin:18px 0 8px;display:flex;align-items:baseline;gap:10px}
+.month h2{font:700 14px Unbounded,Manrope,sans-serif;text-transform:uppercase;letter-spacing:.04em}
+.row{display:grid;grid-template-columns:78px 1fr 190px 170px 130px 110px;gap:12px;align-items:center;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;cursor:pointer}
+.row:hover{border-color:var(--accent)}
+.row.past{opacity:.7}.row.cancel{opacity:.5}
+@media (max-width:900px){.row{grid-template-columns:70px 1fr;gap:6px 10px}.row>*:nth-child(n+3){grid-column:2}}
+.date{display:flex;flex-direction:column;line-height:1.1}
+.date b{font:700 20px Unbounded,Manrope,sans-serif}
+.date span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.date.we b{color:var(--accent)}
+.title{font-weight:700}.title small{display:block;color:var(--muted);font-weight:500}
+.seats{display:flex;flex-direction:column;gap:4px}
+.bar{height:6px;border-radius:3px;background:var(--line-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.bar i.ok{background:var(--good)}.bar i.low{background:var(--warn)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.s-plan{background:var(--surface-2);color:var(--muted)}.s-nabor{background:var(--info-soft);color:var(--info)}.s-ok{background:var(--good-soft);color:var(--good)}
+.s-done{background:var(--accent-soft);color:var(--accent)}.s-cancel{background:var(--bad-soft);color:var(--bad)}.s-move{background:var(--warn-soft);color:var(--warn)}
+.b-new{background:var(--info-soft);color:var(--info)}.b-conf{background:var(--good-soft);color:var(--good)}.b-pre{background:var(--accent-2-soft);color:var(--accent-2)}
+.b-paid{background:var(--good-soft);color:var(--good)}.b-cancel{background:var(--bad-soft);color:var(--bad)}.b-came{background:var(--accent-soft);color:var(--accent)}.b-noshow{background:var(--surface-2);color:var(--muted)}
+.l-new{background:var(--info-soft);color:var(--info)}.l-offered{background:var(--warn-soft);color:var(--warn)}.l-booked{background:var(--good-soft);color:var(--good)}.l-lost{background:var(--surface-2);color:var(--muted)}
+.chip{display:inline-block;padding:2px 7px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);font-size:11px;color:var(--muted)}
+.chip.act{cursor:pointer;color:var(--accent);border-color:var(--accent-soft);background:var(--accent-soft)}
+.links{display:flex;gap:4px;flex-wrap:wrap}
+.links a,.links span{font-size:11px;padding:2px 7px;border-radius:6px;border:1px solid var(--line);text-decoration:none}
+.links span{color:var(--muted);border-style:dashed}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line-2);vertical-align:top}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tr.clickable{cursor:pointer}tr.clickable:hover td{background:var(--surface-2)}
+.tbl-wrap{overflow-x:auto}
+td .phone{white-space:nowrap}
+/* сетка студий */
+.sched{border-collapse:separate;border-spacing:0;min-width:1100px}
+.sched th,.sched td{border-bottom:1px solid var(--line);font-size:12px;padding:7px 8px}
+.sched td.st{font-weight:700;background:var(--surface-2);vertical-align:middle;border-right:1px solid var(--line)}
+.sched td.st small{display:block;font-weight:500;color:var(--muted)}
+.sched td.ped{color:var(--muted);width:190px}
+.sched td.d{width:105px;white-space:pre-line}
+.sched td.d.vac{background:var(--good-soft)}
+.sched tr.mkrow td{background:var(--accent-soft)}
+.sched tr.mkrow td.st{background:var(--accent-soft)}
+.sched tr.mkrow td.d .mkd{display:block;cursor:pointer;color:var(--accent);font-weight:700}
+.sched tr.mkrow td.d .mkd small{display:block;font-weight:500;color:var(--ink)}
+.sched tr.mkrow td.d .mkd:hover{text-decoration:underline}
+.sched tr.gap td{border:0;height:8px;background:transparent;padding:0}
+/* задачи */
+.task{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);margin-bottom:8px;cursor:pointer}
+.task .lvl{width:4px;align-self:stretch;border-radius:2px}
+.task .lvl.bad{background:var(--bad)}.task .lvl.warn{background:var(--warn)}.task .lvl.info{background:var(--info)}
+.task b{display:block}.task small{color:var(--muted)}
+/* заявки */
+.lead{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;display:grid;grid-template-columns:1fr 260px;gap:10px 16px}
+@media (max-width:800px){.lead{grid-template-columns:1fr}}
+.lead .who{font-weight:700;font-size:15px}
+.lead .meta{font-size:12px;color:var(--muted);margin-top:2px}
+.lead .wish{margin-top:6px}
+.lead .sug{display:flex;flex-direction:column;gap:6px}
+.lead .sug .chip{display:block;white-space:normal;line-height:1.35}
+.lead .act{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.lead select{width:auto;padding:4px 8px;font-size:12px}
+.shot{max-width:220px;max-height:160px;border-radius:8px;border:1px solid var(--line);display:block;margin-top:6px;cursor:zoom-in}
+/* файлы */
+.files{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.file{display:flex;flex-direction:column;gap:4px;width:110px;font-size:11px;color:var(--muted)}
+.file img{width:110px;height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--line);cursor:zoom-in}
+.file .doc{width:110px;height:80px;border-radius:8px;border:1px solid var(--line);display:grid;place-items:center;background:var(--surface-2);font-weight:700;color:var(--ink)}
+.file span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file button{align-self:flex-start}
+/* drawer & modal */
+.overlay{position:fixed;inset:0;background:rgba(20,10,15,.35);z-index:30}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(640px,100vw);background:var(--bg);border-left:1px solid var(--line);z-index:31;overflow-y:auto;box-shadow:var(--shadow)}
+.drawer-in{padding:18px 20px 40px}
+.drawer-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:14px}
+.drawer h2{font:700 17px/1.2 Unbounded,Manrope,sans-serif}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form .full{grid-column:1/-1}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+.book{display:grid;grid-template-columns:1fr auto;gap:8px 10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.book .who{font-weight:700}.book .meta{font-size:12px;color:var(--muted)}
+.book select{width:auto;padding:4px 8px;font-size:12px}
+.hist{font-size:12px;color:var(--muted);border-left:2px solid var(--line);padding-left:10px;margin-top:10px}
+.hist div{margin-bottom:3px}
+.section-t{margin:18px 0 8px;display:flex;justify-content:space-between;align-items:center}
+.modal{position:fixed;inset:0;display:grid;place-items:center;z-index:40}
+.modal .box{width:min(560px,94vw);max-height:92vh;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);position:relative}
+.modal .overlay{position:absolute}
+.lightbox{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.8);display:grid;place-items:center;cursor:zoom-out}
+.lightbox img{max-width:94vw;max-height:94vh;border-radius:8px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;z-index:70}
+.empty{padding:26px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
+.legend{font-size:12px;color:var(--muted)}
+.lg{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px;border:1px solid var(--line)}
+/* блокнот */
+.note-wrap{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+@media (max-width:900px){.note-wrap{grid-template-columns:1fr}}
+#noteText{min-height:60vh;font-size:14px;line-height:1.6}
+.ql{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid var(--line-2)}
+.ql a{font-weight:600;text-decoration:none}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style></head><body>
+
+<header class="top"><div class="top-in">
+  <div class="brand"><div class="logo">АК</div><div><h1>Штаб мастер-классов</h1><small>студия живописи Анастасии Куликовой · сен–ноя 2026</small></div></div>
+  <nav role="tablist" id="nav">
+    <button role="tab" data-tab="overview" aria-selected="true">Обзор</button>
+    <button role="tab" data-tab="grid">Сетка студий</button>
+    <button role="tab" data-tab="mk">Мастер-классы<span class="cnt" id="cntMk"></span></button>
+    <button role="tab" data-tab="leads">Заявки<span class="cnt" id="cntLeads"></span></button>
+    <button role="tab" data-tab="bookings">Записи<span class="cnt" id="cntBk"></span></button>
+    <button role="tab" data-tab="clients">Клиенты</button>
+    <button role="tab" data-tab="tasks">Задачи<span class="cnt" id="cntTasks"></span></button>
+    <button role="tab" data-tab="notes">Блокнот</button>
+  </nav>
+  <div class="sync"><span class="dot" id="syncDot"></span><span id="syncText">локальная копия</span></div>
+</div></header>
+
+<main>
+<section id="tab-overview">
+  <div class="grid tiles" id="tiles"></div>
+  <div class="grid two" style="margin-top:14px">
+    <div class="card"><div class="card-h"><h2>Ближайшие 14 дней</h2><button class="btn small" data-go="mk">Все МК →</button></div><div id="soon"></div></div>
+    <div>
+      <div class="card" style="margin-bottom:14px"><div class="card-h"><h2>Новые заявки</h2><button class="btn small" data-go="leads">Все →</button></div><div id="leadsShort"></div></div>
+      <div class="card"><div class="card-h"><h2>Требует внимания</h2><button class="btn small" data-go="tasks">Все →</button></div><div id="tasksShort"></div></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px"><div class="card-h"><h2>Нагрузка по студиям</h2><span class="legend">МК · записей · выручка ожидаемая</span></div><div class="tbl-wrap"><table id="byStudio"></table></div></div>
+</section>
+
+<section id="tab-grid" hidden>
+  <div class="toolbar">
+    <span class="legend"><i class="lg" style="background:var(--surface-2)"></i>базовые уроки (часы педагога) &nbsp; <i class="lg" style="background:var(--good-soft)"></i>вакансия — слот пока свободен &nbsp; <i class="lg" style="background:var(--accent-soft)"></i>мастер-классы (клик — открыть)</span>
+    <select id="gMonth" style="margin-left:auto"></select>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden"><div class="tbl-wrap"><table class="sched" id="gridTable"></table></div></div>
+  <p class="legend" style="margin-top:8px">Базовое расписание — из таблицы студии «РАСПИСАНИЕ 26» на 16.09.2026. Если оно поменялось — скажи Клоду, обновим.</p>
+</section>
+
+<section id="tab-mk" hidden>
+  <div class="toolbar">
+    <input id="fMk" placeholder="Поиск: название, студия, педагог">
+    <select id="fStudio"><option value="">Все студии</option></select>
+    <select id="fStatus"><option value="">Все статусы</option></select>
+    <label style="display:flex;gap:6px;align-items:center;font-size:13px"><input type="checkbox" id="fPast" style="width:auto"> прошедшие</label>
+    <button class="btn primary" id="addMk" style="margin-left:auto">+ Мастер-класс</button>
+  </div>
+  <div id="mkList"></div>
+</section>
+
+<section id="tab-leads" hidden>
+  <div class="toolbar">
+    <input id="fLead" placeholder="Поиск: имя, телефон, пожелание">
+    <select id="fLeadStatus"><option value="">Все статусы</option></select>
+    <button class="btn primary" id="addLead" style="margin-left:auto">+ Заявка</button>
+  </div>
+  <p class="legend" style="margin:0 0 10px">Заявка = обращение, которое ещё не превратилось в запись на конкретный МК.  «Записать на МК» превращает заявку в запись.</p>
+  <div id="leadList"></div>
+</section>
+
+<section id="tab-bookings" hidden>
+  <div class="toolbar">
+    <input id="fBk" placeholder="Поиск: имя, телефон, МК">
+    <select id="fBkStatus"><option value="">Все статусы</option></select>
+    <button class="btn" id="exportCsv" style="margin-left:auto" hidden>Экспорт CSV</button>
+    <button class="btn primary" id="addBk">+ Запись</button>
+  </div>
+  <div class="card"><div class="tbl-wrap"><table id="bkTable"></table></div></div>
+</section>
+
+<section id="tab-clients" hidden>
+  <div class="toolbar"><input id="fCl" placeholder="Поиск по имени или телефону"></div>
+  <div class="card"><div class="tbl-wrap"><table id="clTable"></table></div></div>
+</section>
+
+<section id="tab-tasks" hidden>
+  <p class="muted" style="margin:0 0 12px">Задачи собираются автоматически: правило Т-3 (за 3 дня меньше 3 мест), неподтверждённые записи старше суток, заявки без ответа, МК без педагога/референса за неделю, прошедшие МК без закрытия.</p>
+  <div id="tasksFull"></div>
+</section>
+
+<section id="tab-notes" hidden>
+  <div class="note-wrap">
+    <div class="card"><div class="card-h"><h2>Блокнот</h2><span class="legend" id="noteState">общий для всех, сохраняется сам</span></div>
+      <textarea id="noteText" placeholder="Договорённости с Анастасией, идеи, что сказать педагогам, черновики текстов…"></textarea></div>
+    <div class="card"><div class="card-h"><h2>Быстрые ссылки</h2><button class="btn small" id="addLink">+ ссылка</button></div><div id="quickLinks"></div>
+      <div class="section-t"><h3>Файлы проекта</h3><span id="upProject"></span></div><div class="files" id="projectFiles"></div></div>
+  </div>
+</section>
+</main>
+<div id="layer"></div>
+
+<script>
+(() => {
+"use strict";
+const STUDIOS = [
+  {id:"otr27", name:"Отрадное 27", addr:"ул. Декабристов 27, 5 эт., ауд. 501", metro:"Отрадное", cap:6},
+  {id:"otr20", name:"Отрадное 20к3", addr:"ул. Декабристов 20к3, ауд. 1", metro:"Отрадное", cap:6},
+  {id:"pol14", name:"Полежаевская, ауд. 14", addr:"Хорошёвское ш. 58, ауд. 14", metro:"Полежаевская", cap:6},
+  {id:"pol31", name:"Полежаевская, ауд. 31", addr:"Хорошёвское ш. 58, ауд. 31", metro:"Полежаевская", cap:6},
+  {id:"yah", name:"Яхромская", addr:"Бескудниковский пр. 4 к.1, каб. без окна", metro:"Яхромская", cap:5},
+  {id:"zel", name:"Зеленоград", addr:"8 мкр, корп. 841", metro:"Зеленоград", cap:6},
+  {id:"nvk", name:"Новокосино", addr:"Новокосинская 17 к.7", metro:"Новокосино", cap:6},
+  {id:"nov", name:"Новаторская", addr:"ул. Академика Пилюгина 14 к.2", metro:"Новаторская", cap:6},
+  {id:"alt", name:"Алтуфьево", addr:"ул. Мурановская 15 к.1", metro:"Алтуфьево", cap:10},
+  {id:"brat", name:"Братиславская", addr:"Братиславская ул. 16 к.1, 2 эт.", metro:"Братиславская", cap:5},
+  {id:"per", name:"Перово", addr:"Федеративный пр. 8а стр.1, каб. 106", metro:"Перово", cap:6},
+  {id:"cafe", name:"Кафе (выезд)", addr:"", metro:"", cap:8},
+];
+// базовое расписание студий (часы педагога по дням; * = вакансия)
+const BASE = [
+ ["otr20","Нефедова А.О.",["15–20","","15–20","","15–20","",""],"Декабристов 20к3, ауд. 1"],
+ ["otr20","* вакансия",["","","","","","10–17","10–17"],"Декабристов 20к3, ауд. 2"],
+ ["otr20","Самбулова Н.А.",["","15–20","","15–20","","",""],"Декабристов 20к3, ауд. 1"],
+ ["otr20","* вакансия",["14–19; Ск/Жв 19–21","","","","","10–17","10–17"],"Декабристов 20к3, ауд. 1"],
+ ["otr20","Власова А.Р.",["14–20","","","","","14–20","10–20"],"Декабристов 20к3, ауд. 2"],
+ ["otr27","Вересоцкая П.Д.",["15–21","","15–21","","15–21","",""],"Декабристов 27, ауд. 502"],
+ ["otr27","Ерохина Д.С. (уходит)",["","","","","","10–17","10–17"],"Декабристов 27, ауд. 502"],
+ ["pol14","Медведева Д.Р.",["","16–21","","15–21","","10–17",""],"Хорошёвское 58, ауд. 14"],
+ ["pol14","Амбарцумян Э. (стажёр)",["15–20","","15–21","","15–21","10–17",""],"Хорошёвское 58, ауд. 14"],
+ ["pol31","Самбулова Н.А.",["15–20","","15–20","","15–20","",""],"Хорошёвское 58, ауд. 31"],
+ ["pol31","* вакансия",["","","","","","с 17","11–17"],"Хорошёвское 58, ауд. 31"],
+ ["yah","Белоусова А.В.",["15–21","","15–21","","","",""],"Бескудниковский 4 к.1"],
+ ["yah","Медков Д.О.",["14–19; Ск/Жв 19–21","","","","14–21","10–17",""],"каб. без окна"],
+ ["yah","Чижикова А. (стажёр)",["","16–21","","16–19; Жв 19–21","","","10–17"],"каб. с окном"],
+ ["yah","Петрова С. (стажёр)",["","","","","16–21","10–17","10–17"],"каб. с окном"],
+ ["zel","Беклемищева О.П.",["","14–21","14–21","","","10–20","10–18"],"8 мкр, к. 841"],
+ ["zel","* вакансия",["","","14–19; Жв 19–21","","14–21","",""],""],
+ ["nvk","Тишкова М.В.",["","","15–21","","","10–17",""],"Новокосинская 17 к.7"],
+ ["nvk","Голубничая П. (стажёр)",["","15–21","","","15–21","","10–18"],""],
+ ["nvk","* вакансия",["","","","","17–19","",""],""],
+ ["nov","Нефедова А.О.",["","15–20","","15–20","","",""],"Ак. Пилюгина 14 к.2"],
+ ["nov","* вакансия",["","","","","","","10–17"],""],
+ ["nov","Васильева В.М.",["14–21","","15–21","","","10–18",""],""],
+ ["alt","Свистунова А. (стажёр с 23.09)",["✓","","✓","","","",""],"Мурановская 15 к.1"],
+ ["alt","Пафомова Л. (стажёр)",["","14–21","","15–20","","10–18",""],""],
+ ["brat","Мотовичева А.П.",["","16–20","","","16–20","","12–18"],"Братиславская 16 к.1"],
+ ["brat","* вакансия",["16–20","","","","","14–19",""],""],
+ ["brat","* вакансия",["","","","","14–21","12–17",""],""],
+ ["per","* вакансия",["","14–20","","14–20","14–21","","10–13"],"Федеративный 8а, каб. 106"],
+];
+const MK_STATUS = {plan:["План","s-plan"], nabor:["Идёт набор","s-nabor"], ok:["Подтверждён","s-ok"], done:["Проведён","s-done"], cancel:["Отменён","s-cancel"], move:["Перенесён","s-move"]};
+const BK_STATUS = {new:["Новая","b-new"], conf:["Подтверждена","b-conf"], pre:["Предоплата","b-pre"], paid:["Оплачена","b-paid"], came:["Пришёл","b-came"], noshow:["Не пришёл","b-noshow"], cancel:["Отменена","b-cancel"]};
+const LEAD_STATUS = {new:["Новая","l-new"], offered:["Предложено","l-offered"], booked:["Записана","l-booked"], lost:["Отказ","l-lost"]};
+const ACTIVE_BK = new Set(["new","conf","pre","paid","came"]);
+const SOURCES = ["сайт","ВК","Telegram","MAX","WhatsApp","звонок","сертификат","кафе","рекомендация","другое"];
+const MONTHS = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+const DOW = ["ВС","ПН","ВТ","СР","ЧТ","ПТ","СБ"], DOW7=["ПН","ВТ","СР","ЧТ","ПТ","СБ","ВС"];
+
+let db=null, downloads=null, assets=null, mks=[], bks=[], leads=[], notes={text:"",links:[],files:[]}, drawerMk=null, noteTimer=null;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const todayStr=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;};
+const fmtDate=s=>{if(!s)return"";const [y,m,d]=s.split("-");return `${d}.${m}`;};
+const dowOf=s=>DOW[new Date(s+"T12:00:00").getDay()];
+const isWE=s=>{const g=new Date(s+"T12:00:00").getDay();return g===0||g===6;};
+const daysTo=s=>Math.round((new Date(s+"T12:00:00")-new Date(todayStr()+"T12:00:00"))/86400000);
+const rub=n=>new Intl.NumberFormat("ru-RU").format(Math.round(n||0))+" ₽";
+const studioOf=id=>STUDIOS.find(s=>s.id===id)||{name:id||"—",addr:"",cap:6,metro:""};
+const seatsOf=mk=>bks.filter(b=>b.mkId===mk.id&&ACTIVE_BK.has(b.status)).reduce((a,b)=>a+(+b.count||1),0);
+const capOf=mk=>+mk.capacity||studioOf(mk.studio).cap;
+const revenueOf=mk=>bks.filter(b=>b.mkId===mk.id&&ACTIVE_BK.has(b.status)).reduce((a,b)=>a+(+b.count||1)*(+mk.price||0),0);
+const normPhone=p=>String(p||"").replace(/\D/g,"").replace(/^8(?=\d{10}$)/,"7");
+const fmtPhone=p=>{const d=normPhone(p);return d.length===11?`+${d[0]} (${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7,9)}-${d.slice(9)}`:(p||"");};
+const genId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const toast=m=>{const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800);};
+// ---------- данные ----------
+
+// ===== ЛОКАЛЬНЫЙ РЕЖИМ (GitHub Pages): данные в этом браузере =====
+const SEED_MK=[{"id": "mk-2026-10-04-otr27", "date": "2026-10-04", "time": "17:00–20:00", "title": "Картина акрилом «Дождливый город»", "age": "12+", "price": 3500, "studio": "otr27", "teacher": "Вересоцкая", "desc": "Огни, отражения в мокром асфальте и зонты.", "status": "plan", "capacity": 6, "links": {}, "notes": "", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4"}]}, {"id": "mk-2026-10-11-alt", "date": "2026-10-11", "time": "17:00–20:00", "title": "Картина маслом «Домик в горах»", "age": "12+", "price": 3500, "studio": "alt", "teacher": "Самбулова", "desc": "Уютный дом, туман и горные склоны.", "status": "plan", "capacity": 10, "links": {}, "notes": "", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4"}]}, {"id": "mk-2026-10-18-pol14", "date": "2026-10-18", "time": "17:00–20:00", "title": "Акварельный скетчинг «Тыквенный латте и книги»", "age": "12+", "price": 2500, "studio": "pol14", "teacher": "Медков", "desc": "Уютная осенняя композиция в лёгкой акварели.", "status": "plan", "capacity": 6, "links": {}, "notes": "", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4"}]}, {"id": "mk-2026-10-25-brat", "date": "2026-10-25", "time": "18:00–21:00", "title": "Картина маслом «Лунная ночь над морем»", "age": "12+", "price": 3500, "studio": "brat", "teacher": "Вересоцкая", "desc": "Лунная дорожка, волны и глубина ночного неба.", "status": "plan", "capacity": 6, "links": {}, "notes": "", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4"}]}, {"id": "mk-2026-11-01-otr20", "date": "2026-11-01", "time": "17:00–20:00", "title": "Интерьерная картина акрилом «Абстракция с золотом»", "age": "12+", "price": 3500, "studio": "otr20", "teacher": "Самбулова", "desc": "Современная картина с золотой поталью.", "status": "plan", "capacity": 6, "links": {}, "notes": "", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4"}]}, {"id": "mk-2026-11-08-yah", "date": "2026-11-08", "time": "17:00–20:00", "title": "Текстурная паста «Белые пионы»", "age": "12+", "price": 3500, "studio": "yah", "teacher": "Медков", "desc": "Нежная объёмная картина мастихином.", "status": "plan", "capacity": 6, "links": {}, "notes": "", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4"}]}, {"id": "mk-2026-11-15-nov", "date": "2026-11-15", "time": "17:00–20:00", "title": "Картина маслом «Туманное утро в лесу»", "age": "12+", "price": 3500, "studio": "nov", "teacher": "Вересоцкая", "desc": "Мягкий свет, стволы в дымке и последние листья.", "status": "plan", "capacity": 6, "links": {}, "notes": "", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4"}]}, {"id": "mk-2026-11-22-alt", "date": "2026-11-22", "time": "17:00–20:00", "title": "Картина акрилом «Улочка с кофейней»", "age": "12+", "price": 3500, "studio": "alt", "teacher": "Самбулова", "desc": "Тёплые окна, вывеска и вечерние огни европейской улочки.", "status": "plan", "capacity": 10, "links": {}, "notes": "", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4"}]}, {"id": "mk-2026-11-29-otr27", "date": "2026-11-29", "time": "17:00–20:00", "title": "Картина маслом «Хризантемы»", "age": "12+", "price": 3500, "studio": "otr27", "teacher": "Вересоцкая", "desc": "Пышный осенний букет — работаем мазком и цветом.", "status": "plan", "capacity": 6, "links": {}, "notes": "", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4"}]}, {"id": "ws-2026-10-03-otr27", "date": "2026-10-03", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr27", "teacher": "Ерохина", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-03-otr20", "date": "2026-10-03", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr20", "teacher": "Нефедова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-03-pol14", "date": "2026-10-03", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "pol14", "teacher": "Медведева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-03-yah", "date": "2026-10-03", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "yah", "teacher": "Медков", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-03-nvk", "date": "2026-10-03", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nvk", "teacher": "Тишкова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-03-nov", "date": "2026-10-03", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nov", "teacher": "Васильева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-03-alt", "date": "2026-10-03", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "alt", "teacher": "Пафомова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-03-brat", "date": "2026-10-03", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "brat", "teacher": "Мотовичева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-03-per", "date": "2026-10-03", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "per", "teacher": "педагог Перово", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-02-zel", "date": "2026-10-02", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "zel", "teacher": "Беклемищева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-10-otr27", "date": "2026-10-10", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr27", "teacher": "Ерохина", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-10-otr20", "date": "2026-10-10", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr20", "teacher": "Нефедова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-10-pol14", "date": "2026-10-10", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "pol14", "teacher": "Медведева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-10-yah", "date": "2026-10-10", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "yah", "teacher": "Медков", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-10-nvk", "date": "2026-10-10", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nvk", "teacher": "Тишкова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-10-nov", "date": "2026-10-10", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nov", "teacher": "Васильева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-10-alt", "date": "2026-10-10", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "alt", "teacher": "Пафомова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-10-brat", "date": "2026-10-10", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "brat", "teacher": "Мотовичева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-10-per", "date": "2026-10-10", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "per", "teacher": "педагог Перово", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-09-zel", "date": "2026-10-09", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "zel", "teacher": "Беклемищева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-17-otr27", "date": "2026-10-17", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr27", "teacher": "Ерохина", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-17-otr20", "date": "2026-10-17", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr20", "teacher": "Нефедова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-17-pol14", "date": "2026-10-17", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "pol14", "teacher": "Медведева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-17-yah", "date": "2026-10-17", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "yah", "teacher": "Медков", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-17-nvk", "date": "2026-10-17", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nvk", "teacher": "Тишкова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-17-nov", "date": "2026-10-17", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nov", "teacher": "Васильева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-17-alt", "date": "2026-10-17", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "alt", "teacher": "Пафомова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-17-brat", "date": "2026-10-17", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "brat", "teacher": "Мотовичева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-17-per", "date": "2026-10-17", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "per", "teacher": "педагог Перово", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-16-zel", "date": "2026-10-16", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "zel", "teacher": "Беклемищева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-24-otr27", "date": "2026-10-24", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr27", "teacher": "Ерохина", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-24-otr20", "date": "2026-10-24", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr20", "teacher": "Нефедова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-24-pol14", "date": "2026-10-24", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "pol14", "teacher": "Медведева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-24-yah", "date": "2026-10-24", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "yah", "teacher": "Медков", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-24-nvk", "date": "2026-10-24", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nvk", "teacher": "Тишкова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-24-nov", "date": "2026-10-24", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nov", "teacher": "Васильева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-24-alt", "date": "2026-10-24", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "alt", "teacher": "Пафомова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-24-brat", "date": "2026-10-24", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "brat", "teacher": "Мотовичева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-24-per", "date": "2026-10-24", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "per", "teacher": "педагог Перово", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-23-zel", "date": "2026-10-23", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "zel", "teacher": "Беклемищева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-31-otr27", "date": "2026-10-31", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr27", "teacher": "Ерохина", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-31-otr20", "date": "2026-10-31", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "otr20", "teacher": "Нефедова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-31-pol14", "date": "2026-10-31", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "pol14", "teacher": "Медведева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-31-yah", "date": "2026-10-31", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "yah", "teacher": "Медков", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-31-nvk", "date": "2026-10-31", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nvk", "teacher": "Тишкова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-31-nov", "date": "2026-10-31", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "nov", "teacher": "Васильева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-31-alt", "date": "2026-10-31", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "alt", "teacher": "Пафомова", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-31-brat", "date": "2026-10-31", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "brat", "teacher": "Мотовичева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-31-per", "date": "2026-10-31", "time": "17:00–19:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "per", "teacher": "педагог Перово", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-10-30-zel", "date": "2026-10-30", "time": "18:00–20:00", "title": "Мастерская: Роспись шоперов и кепок", "age": "4+", "price": 1500, "studio": "zel", "teacher": "Беклемищева", "desc": "Расписываем шопер или кепку акрилом по ткани — уносите готовую вещь. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-07-otr27", "date": "2026-11-07", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "otr27", "teacher": "Ерохина", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-07-otr20", "date": "2026-11-07", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "otr20", "teacher": "Нефедова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-07-pol14", "date": "2026-11-07", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "pol14", "teacher": "Медведева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-07-yah", "date": "2026-11-07", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "yah", "teacher": "Медков", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-07-nvk", "date": "2026-11-07", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "nvk", "teacher": "Тишкова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-07-nov", "date": "2026-11-07", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "nov", "teacher": "Васильева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-07-alt", "date": "2026-11-07", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "alt", "teacher": "Пафомова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-07-brat", "date": "2026-11-07", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "brat", "teacher": "Мотовичева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-07-per", "date": "2026-11-07", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "per", "teacher": "педагог Перово", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-06-zel", "date": "2026-11-06", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "zel", "teacher": "Беклемищева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-14-otr27", "date": "2026-11-14", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "otr27", "teacher": "Ерохина", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-14-otr20", "date": "2026-11-14", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "otr20", "teacher": "Нефедова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-14-pol14", "date": "2026-11-14", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "pol14", "teacher": "Медведева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-14-yah", "date": "2026-11-14", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "yah", "teacher": "Медков", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-14-nvk", "date": "2026-11-14", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "nvk", "teacher": "Тишкова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-14-nov", "date": "2026-11-14", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "nov", "teacher": "Васильева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-14-alt", "date": "2026-11-14", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "alt", "teacher": "Пафомова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-14-brat", "date": "2026-11-14", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "brat", "teacher": "Мотовичева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-14-per", "date": "2026-11-14", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "per", "teacher": "педагог Перово", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-13-zel", "date": "2026-11-13", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "zel", "teacher": "Беклемищева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-21-otr27", "date": "2026-11-21", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "otr27", "teacher": "Ерохина", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-21-otr20", "date": "2026-11-21", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "otr20", "teacher": "Нефедова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-21-pol14", "date": "2026-11-21", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "pol14", "teacher": "Медведева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-21-yah", "date": "2026-11-21", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "yah", "teacher": "Медков", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-21-nvk", "date": "2026-11-21", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "nvk", "teacher": "Тишкова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-21-nov", "date": "2026-11-21", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "nov", "teacher": "Васильева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-21-alt", "date": "2026-11-21", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "alt", "teacher": "Пафомова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-21-brat", "date": "2026-11-21", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "brat", "teacher": "Мотовичева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-21-per", "date": "2026-11-21", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "per", "teacher": "педагог Перово", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-20-zel", "date": "2026-11-20", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "zel", "teacher": "Беклемищева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-28-otr27", "date": "2026-11-28", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "otr27", "teacher": "Ерохина", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-28-otr20", "date": "2026-11-28", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "otr20", "teacher": "Нефедова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-28-pol14", "date": "2026-11-28", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "pol14", "teacher": "Медведева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-28-yah", "date": "2026-11-28", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "yah", "teacher": "Медков", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-28-nvk", "date": "2026-11-28", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "nvk", "teacher": "Тишкова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-28-nov", "date": "2026-11-28", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "nov", "teacher": "Васильева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-28-alt", "date": "2026-11-28", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "alt", "teacher": "Пафомова", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-28-brat", "date": "2026-11-28", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "brat", "teacher": "Мотовичева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-28-per", "date": "2026-11-28", "time": "17:00–19:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "per", "teacher": "педагог Перово", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}, {"id": "ws-2026-11-27-zel", "date": "2026-11-27", "time": "18:00–20:00", "title": "Мастерская: Мозаика", "age": "4+", "price": 1500, "studio": "zel", "teacher": "Беклемищева", "desc": "Собираем панно из стеклянной мозаики: кит, маяк, ракета, животные. Дети от 4 лет — 1 час (1000 ₽), 7+ и семьи — 2 часа (1500 ₽).", "status": "plan", "capacity": 6, "links": {}, "notes": "При <2 записей — объединить с соседней студией.", "materialsChecked": false, "createdAt": "2026-09-19T08:00:00.000Z", "history": [{"t": "2026-09-19T08:00:00.000Z", "text": "план v4 (мастерская)"}]}];
+function persist(){ try{ localStorage.setItem("mkhub.data",JSON.stringify({mks,bks,leads,notes})); }catch(e){} }
+async function connect(){
+  try{ const st=JSON.parse(localStorage.getItem("mkhub.data")||"null"); if(st){ mks=st.mks||SEED_MK; bks=st.bks||[]; leads=st.leads||[]; notes={text:"",links:[],files:[],...(st.notes||{})}; } else { mks=SEED_MK.slice(); } }catch(e){ mks=SEED_MK.slice(); }
+  assets={upload:async f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res({id:r.result,url:r.result,sizeBytes:f.size,contentType:f.type});r.onerror=rej;r.readAsDataURL(f);}),delete:async()=>{}};
+  downloads={save:async({filename,data})=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"text/csv"}));a.download=filename;a.click();}};
+  $("#exportCsv").hidden=false; $("#syncDot").classList.add("on"); $("#syncText").textContent="данные в этом браузере";
+  render(); renderNotes();
+}
+async function save(col,obj,why){
+  const {id}=obj; obj={...obj,history:hist(obj,why),updatedAt:new Date().toISOString()};
+  if(col==="bookings"||col==="leads") obj.phoneKey=normPhone(obj.phone);
+  const arr=col==="mk"?mks:col==="bookings"?bks:leads; const i=arr.findIndex(x=>x.id===id); if(i>=0) arr[i]=obj; else arr.push(obj);
+  persist(); toast("Сохранено"); render(); return true;
+}
+async function delDoc(path){ const [col,id]=path.split("/"); const arr=col==="mk"?mks:col==="bookings"?bks:leads; const i=arr.findIndex(x=>x.id===id); if(i>=0) arr.splice(i,1); persist(); toast("Удалено"); render(); }
+async function saveNotes(patch,why){ notes={...notes,...patch,updatedAt:new Date().toISOString()}; persist(); renderNotes(); if(why) toast(why); }
+async function uploadFiles(fileList){ const out=[]; for(const f of fileList){ const r=await assets.upload(f); out.push({id:r.id,name:f.name,type:f.type,size:f.size}); } return out; }
+const blob=id=>id;
+
+// ---------- подбор МК под заявку ----------
+function suggestFor(lead){
+  const guests=+lead.guests||1, wish=(lead.wish||"").toLowerCase(), kids=/дет|реб|лет|сын|доч|школ|семь/.test(((lead.ages||"")+" "+wish).toLowerCase());
+  const fmt=[["масл","масл"],["акрил","акрил"],["акварел","акварел"],["скетч","скетч"],["шопер","шопер"],["паст","паст"],["новогод","новогод"]].filter(([k])=>wish.includes(k)).map(([,v])=>v);
+  const metro=(lead.district||"").toLowerCase();
+  return mks.filter(m=>daysTo(m.date)>=0&&!["cancel","done","move"].includes(m.status)).map(m=>{
+    const free=capOf(m)-seatsOf(m); let score=0, why=[];
+    if(free<guests) return null;
+    if(fmt.length&&fmt.some(f=>m.title.toLowerCase().includes(f))){score+=40;why.push("формат");}
+    if(kids&&(m.age||"").startsWith("7")){score+=15;why.push("7+");}
+    if(metro&&studioOf(m.studio).metro.toLowerCase()&&metro.includes(studioOf(m.studio).metro.toLowerCase())){score+=35;why.push("рядом");}
+    if(lead.dates&&lead.dates.includes(fmtDate(m.date))){score+=50;why.push("дата");}
+    const seats=seatsOf(m); if(seats<3&&seats>0){score+=12;why.push("добор");} if(seats===0){score+=6;}
+    score-=Math.min(20,daysTo(m.date)/4);
+    return {m,score,why,free};
+  }).filter(Boolean).sort((a,b)=>b.score-a.score).slice(0,3);
+}
+
+// ---------- задачи ----------
+function buildTasks(){
+  const t=[];
+  for(const mk of mks){
+    if(mk.status==="cancel"||mk.status==="done") continue;
+    const d=daysTo(mk.date), seats=seatsOf(mk), cap=capOf(mk);
+    if(d<0) t.push({lvl:"warn",mk,title:`Закрыть МК ${fmtDate(mk.date)} «${mk.title}»`,sub:"Дата прошла — поставить «Проведён» или «Отменён», прикрепить отчёт педагога"});
+    else{
+      if(d<=3&&seats<3) t.push({lvl:"bad",mk,title:`Т-3: ${seats} из ${cap} мест — ${fmtDate(mk.date)} «${mk.title}»`,sub:"Рассылка по базе, «приведи друга −20%», районные чаты, личные приглашения. Минимум 2 — иначе перенос"});
+      if(d<=7&&!mk.teacher) t.push({lvl:"warn",mk,title:`Нет педагога — ${fmtDate(mk.date)} «${mk.title}»`,sub:studioOf(mk.studio).name});
+      if(d<=7&&!((mk.links&&mk.links.ref)||(mk.files||[]).length)) t.push({lvl:"warn",mk,title:`Нет референса — ${fmtDate(mk.date)} «${mk.title}»`,sub:"Загрузить файл или ссылку; педагог должен получить его заранее"});
+      if(d<=10&&!(mk.links&&mk.links.post)) t.push({lvl:"info",mk,title:`Нет анонса — ${fmtDate(mk.date)} «${mk.title}»`,sub:"Карточка + пост + афиши"});
+      if(d<=5&&!mk.materialsChecked) t.push({lvl:"info",mk,title:`Проверить материалы — ${fmtDate(mk.date)} ${studioOf(mk.studio).name}`,sub:"Холсты 30×40 ≥5, краски, фартуки, стаканчики; заявка на доставку"});
+    }
+  }
+  for(const b of bks){
+    if(b.status!=="new") continue;
+    const age=(Date.now()-new Date(b.createdAt||0))/3600000; const mk=mks.find(m=>m.id===b.mkId);
+    if(age>24) t.push({lvl:"bad",mk,bk:b,title:`Подтвердить запись: ${b.name} (${b.count||1} чел.)`,sub:`${fmtPhone(b.phone)} · ${mk?fmtDate(mk.date)+" "+mk.title:"МК не выбран"} · ждёт ${Math.floor(age/24)} дн.`});
+  }
+  for(const l of leads){
+    if(l.status==="new"){const age=(Date.now()-new Date(l.createdAt||0))/3600000; t.push({lvl:age>2?"bad":"info",lead:l,title:`Ответить на заявку: ${l.name||"без имени"} · ${l.guests||"?"} чел.`,sub:`${fmtPhone(l.phone)} · ${l.wish||""} · ждёт ${age<1?"меньше часа":Math.floor(age)+" ч."}`});}
+    if(l.status==="offered"){const age=(Date.now()-new Date(l.updatedAt||l.createdAt||0))/3600000; if(age>48) t.push({lvl:"warn",lead:l,title:`Напомнить: ${l.name||"без имени"} не ответил ${Math.floor(age/24)} дн.`,sub:`${fmtPhone(l.phone)} · предложено ${(l.suggested||[]).length} МК`});}
+  }
+  const order={bad:0,warn:1,info:2}; t.sort((a,b)=>order[a.lvl]-order[b.lvl]);
+  return t;
+}
+
+// ---------- рендер ----------
+function setCnt(id,n){const e=$(id);e.textContent=n;e.classList.toggle("zero",!n);}
+function render(){
+  const tasks=buildTasks();
+  setCnt("#cntMk",mks.filter(m=>daysTo(m.date)>=0&&m.status!=="cancel").length);
+  setCnt("#cntBk",bks.filter(b=>ACTIVE_BK.has(b.status)).length);
+  setCnt("#cntLeads",leads.filter(l=>l.status==="new"||l.status==="offered").length);
+  setCnt("#cntTasks",tasks.length);
+  renderOverview(tasks); renderGrid(); renderMk(); renderLeads(); renderBookings(); renderClients(); renderTasks(tasks);
+  if(drawerMk){ const m=mks.find(x=>x.id===drawerMk); if(m) openMk(m.id); }
+}
+function pill(map,key){const [l,c]=map[key]||[key,"s-plan"];return `<span class="pill ${c}">${esc(l)}</span>`;}
+function renderOverview(tasks){
+  const upcoming=mks.filter(m=>daysTo(m.date)>=0&&m.status!=="cancel");
+  const seats=upcoming.reduce((a,m)=>a+seatsOf(m),0), rev=upcoming.reduce((a,m)=>a+revenueOf(m),0);
+  const risky=upcoming.filter(m=>daysTo(m.date)<=7&&seatsOf(m)<3).length;
+  const unconf=bks.filter(b=>b.status==="new").length, newLeads=leads.filter(l=>l.status==="new").length;
+  const done=mks.filter(m=>m.status==="done"), doneRev=done.reduce((a,m)=>a+revenueOf(m),0);
+  $("#tiles").innerHTML=[
+    ["МК впереди",upcoming.length,`до ${upcoming.length?fmtDate(upcoming.map(m=>m.date).sort().pop()):"—"}`],
+    ["Мест занято",seats,`в среднем ${upcoming.length?(seats/upcoming.length).toFixed(1):0} на МК · цель 3–4`],
+    ["Выручка ожидаемая",rub(rev),"по активным записям"],
+    ["Новые заявки",newLeads,"ждут ответа",newLeads>0],
+    ["Ждут подтверждения",unconf,"записей «Новая»",unconf>0],
+    ["Риск: <3 мест за 7 дн.",risky,"правило Т-3",risky>0],
+    ["Проведено",done.length,rub(doneRev)],
+  ].map(([l,v,s,al])=>`<div class="tile ${al?"alert":""}"><div class="eyebrow">${l}</div><div class="v num">${v}</div><div class="sub">${s}</div></div>`).join("");
+  const soon=upcoming.filter(m=>daysTo(m.date)<=14).sort((a,b)=>a.date.localeCompare(b.date));
+  $("#soon").innerHTML=soon.length?soon.map(rowMk).join(""):`<div class="empty">В ближайшие 2 недели МК нет</div>`;
+  $("#tasksShort").innerHTML=tasks.length?tasks.slice(0,5).map(taskHtml).join(""):`<div class="empty">Всё под контролем</div>`;
+  const nl=leads.filter(l=>l.status==="new"||l.status==="offered").sort((a,b)=>(b.createdAt||"").localeCompare(a.createdAt||"")).slice(0,4);
+  $("#leadsShort").innerHTML=nl.length?nl.map(l=>`<div class="task" data-lead="${esc(l.id)}"><div class="lvl ${l.status==="new"?"bad":"warn"}"></div><div><b>${esc(l.name||"без имени")} · ${esc(l.guests||"?")} чел. ${pill(LEAD_STATUS,l.status)}</b><small>${esc(fmtPhone(l.phone))} · ${esc(l.wish||"")}</small></div></div>`).join(""):`<div class="empty">Новых заявок нет</div>`;
+  const by={};
+  for(const m of upcoming){const k=studioOf(m.studio).name;by[k]=by[k]||{n:0,s:0,r:0};by[k].n++;by[k].s+=seatsOf(m);by[k].r+=revenueOf(m);}
+  $("#byStudio").innerHTML=`<tr><th>Студия</th><th class="num">МК</th><th class="num">Записей</th><th class="num">Выручка</th></tr>`+Object.entries(by).sort((a,b)=>b[1].n-a[1].n).map(([k,v])=>`<tr><td>${esc(k)}</td><td class="num">${v.n}</td><td class="num">${v.s}</td><td class="num">${rub(v.r)}</td></tr>`).join("");
+}
+function renderGrid(){
+  const sel=$("#gMonth"); const months=[...new Set(mks.map(m=>m.date.slice(0,7)))].sort();
+  if(sel.options.length!==months.length+1){const cur=sel.value;sel.innerHTML=`<option value="">Все даты впереди</option>`+months.map(k=>`<option value="${k}">${MONTHS[+k.slice(5)-1]} ${k.slice(0,4)}</option>`).join("");sel.value=cur;}
+  const mo=sel.value;
+  const list=mks.filter(m=>m.status!=="cancel"&&(mo?m.date.startsWith(mo):daysTo(m.date)>=0));
+  let out=`<tr><th>Студия</th><th>Педагог / строка</th>${DOW7.map(d=>`<th>${d}</th>`).join("")}<th>Кабинет</th></tr>`;
+  for(const st of STUDIOS){
+    if(st.id==="cafe") continue;
+    const rows=BASE.filter(r=>r[0]===st.id); const mine=list.filter(m=>m.studio===st.id);
+    if(!rows.length&&!mine.length) continue;
+    const total=rows.length+1;
+    rows.forEach((r,i)=>{ out+=`<tr>${i===0?`<td class="st" rowspan="${total}">${esc(st.name)}<small>${esc(st.addr)}</small></td>`:""}<td class="ped">${esc(r[1])}</td>${r[2].map(v=>`<td class="d ${r[1].startsWith("*")&&v?"vac":""}">${esc(v)}</td>`).join("")}<td class="muted">${esc(r[3])}</td></tr>`; });
+    const byDow={}; for(const m of mine){const k=DOW7.indexOf(dowOf(m.date));(byDow[k]=byDow[k]||[]).push(m);}
+    out+=`<tr class="mkrow">${rows.length?"":`<td class="st">${esc(st.name)}<small>${esc(st.addr)}</small></td>`}<td class="ped" style="color:var(--accent);font-weight:700">🎨 Мастер-классы (${mine.length})</td>${DOW7.map((d,i)=>`<td class="d">${(byDow[i]||[]).sort((a,b)=>a.date.localeCompare(b.date)).map(m=>`<span class="mkd" data-mk="${esc(m.id)}">${fmtDate(m.date)} ${esc(m.time)}<small>${esc(m.title)} · ${seatsOf(m)}/${capOf(m)}</small></span>`).join("")}</td>`).join("")}<td class="muted">${mine.length?"см. карточку МК":st.id==="zel"||st.id==="nvk"?"выходные заняты — МК не ставим":""}</td></tr>`;
+    out+=`<tr class="gap"><td colspan="10"></td></tr>`;
+  }
+  $("#gridTable").innerHTML=out;
+}
+function rowMk(m){
+  const st=studioOf(m.studio), seats=seatsOf(m), cap=capOf(m), pct=Math.min(100,seats/cap*100);
+  const cls=seats>=3?"ok":(seats>0?"low":""); const d=daysTo(m.date); const links=m.links||{};
+  const L=[["ref","реф"],["card","карточка"],["post","анонс"],["signup","запись"]].map(([k,l])=>links[k]?`<a href="${esc(links[k])}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${l}</a>`:`<span>${l}</span>`).join("")+((m.files||[]).length?`<span style="border-style:solid">📎 ${(m.files||[]).length}</span>`:"");
+  return `<div class="row ${d<0?"past":""} ${m.status==="cancel"?"cancel":""}" data-mk="${esc(m.id)}">
+    <div class="date ${isWE(m.date)?"we":""}"><b>${fmtDate(m.date)}</b><span>${dowOf(m.date)} · ${esc(m.time||"")}</span></div>
+    <div class="title">${esc(m.title)}<small>${esc(st.name)} · ${esc(m.teacher||"педагог не назначен")} · ${esc(m.age||"")} · ${rub(m.price)}</small></div>
+    <div class="seats"><div class="muted num" style="font-size:12px">${seats} / ${cap} мест · ${rub(revenueOf(m))}</div><div class="bar"><i class="${cls}" style="width:${pct}%"></i></div></div>
+    <div class="links">${L}</div>
+    <div>${pill(MK_STATUS,m.status||"plan")}</div>
+    <div class="muted num" style="font-size:12px">${d<0?`${-d} дн. назад`:d===0?"сегодня":`через ${d} дн.`}</div>
+  </div>`;
+}
+function fillSelects(){
+  $("#fStudio").innerHTML=`<option value="">Все студии</option>`+STUDIOS.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
+  $("#fStatus").innerHTML=`<option value="">Все статусы</option>`+Object.entries(MK_STATUS).map(([k,[l]])=>`<option value="${k}">${l}</option>`).join("");
+  $("#fBkStatus").innerHTML=`<option value="">Все статусы</option>`+Object.entries(BK_STATUS).map(([k,[l]])=>`<option value="${k}">${l}</option>`).join("");
+  $("#fLeadStatus").innerHTML=`<option value="">Активные</option>`+Object.entries(LEAD_STATUS).map(([k,[l]])=>`<option value="${k}">${l}</option>`).join("")+`<option value="all">Все</option>`;
+}
+function renderMk(){
+  const q=$("#fMk").value.trim().toLowerCase(), st=$("#fStudio").value, ss=$("#fStatus").value, past=$("#fPast").checked;
+  let list=mks.filter(m=>(past||daysTo(m.date)>=0)&&(!st||m.studio===st)&&(!ss||(m.status||"plan")===ss)&&(!q||[m.title,studioOf(m.studio).name,m.teacher,m.desc].join(" ").toLowerCase().includes(q))).sort((a,b)=>a.date.localeCompare(b.date));
+  if(!list.length){$("#mkList").innerHTML=`<div class="empty">Ничего не найдено</div>`;return;}
+  let out="",cur="";
+  for(const m of list){const [y,mo]=m.date.split("-");const k=`${MONTHS[+mo-1]} ${y}`;if(k!==cur){cur=k;out+=`<div class="month"><h2>${k}</h2><span class="muted">${list.filter(x=>x.date.startsWith(y+"-"+mo)).length} МК</span></div>`;}out+=rowMk(m);}
+  $("#mkList").innerHTML=out;
+}
+function leadHtml(l){
+  const sug=(l.suggested&&l.suggested.length?l.suggested.map(id=>({m:mks.find(m=>m.id===id),why:[]})).filter(x=>x.m):suggestFor(l));
+  return `<div class="lead" data-leadcard="${esc(l.id)}">
+    <div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="who">${esc(l.name||"без имени")}</span>${pill(LEAD_STATUS,l.status||"new")}<span class="chip">${esc(l.channel||"")}</span>${l.occasion?`<span class="chip">${esc(l.occasion)}</span>`:""}</div>
+      <div class="meta"><a href="tel:+${normPhone(l.phone)}">${esc(fmtPhone(l.phone))}</a>${l.handle?` · ${esc(l.handle)}`:""} · <b>${esc(l.guests||"?")} чел.</b>${l.ages?` · ${esc(l.ages)}`:""}${l.district?` · ${esc(l.district)}`:""}${l.dates?` · даты: ${esc(l.dates)}`:""}${l.budget?` · ${esc(l.budget)}`:""}</div>
+      ${l.wish?`<div class="wish">${esc(l.wish)}</div>`:""}
+      ${l.comment?`<div class="meta">${esc(l.comment)}</div>`:""}
+      ${l.screenshot?`<img class="shot" src="${blob(l.screenshot)}" alt="скрин заявки" data-zoom="${blob(l.screenshot)}">`:""}
+      <div class="act">
+        <select data-leadstatus="${esc(l.id)}">${Object.entries(LEAD_STATUS).map(([k,[t]])=>`<option value="${k}" ${k===(l.status||"new")?"selected":""}>${t}</option>`).join("")}</select>
+        <button class="btn small primary" data-leadbook="${esc(l.id)}">Записать на МК</button>
+        <button class="btn small" data-leadedit="${esc(l.id)}">✎ Изменить</button>
+        ${assets?`<label class="btn small" style="display:inline-block">📎 скрин<input type="file" accept="image/*" data-leadshot="${esc(l.id)}" hidden></label>`:""}
+        <span class="muted" style="font-size:11px;margin-left:auto">${l.createdAt?new Date(l.createdAt).toLocaleString("ru-RU",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):""}</span>
+      </div>
+    </div>
+    <div class="sug"><div class="eyebrow">Предложить</div>${sug.length?sug.map(s=>`<span class="chip act" data-leadbook="${esc(l.id)}" data-mkpick="${esc(s.m.id)}"><b>${fmtDate(s.m.date)} ${dowOf(s.m.date)}</b> · ${esc(s.m.title)}<br>${esc(studioOf(s.m.studio).name)} · свободно ${capOf(s.m)-seatsOf(s.m)} · ${rub(s.m.price)}${s.why&&s.why.length?` · <i>${s.why.join(", ")}</i>`:""}</span>`).join(""):`<span class="muted" style="font-size:12px">Подходящих открытых МК нет — предложить закрытый МК/ДР (пакет по возрасту)</span>`}</div>
+  </div>`;
+}
+function renderLeads(){
+  const q=$("#fLead").value.trim().toLowerCase(), ss=$("#fLeadStatus").value;
+  const list=leads.filter(l=>(ss==="all"||(ss?l.status===ss:(l.status==="new"||l.status==="offered")))&&(!q||[l.name,l.phone,normPhone(l.phone),l.wish,l.district,l.handle].join(" ").toLowerCase().includes(q))).sort((a,b)=>(b.createdAt||"").localeCompare(a.createdAt||""));
+  $("#leadList").innerHTML=list.length?list.map(leadHtml).join(""):`<div class="empty">Заявок нет. Положи скрин в папку «входящие/новые» и скажи Клоду «обработай входящие» — или добавь вручную.</div>`;
+}
+function renderBookings(){
+  const q=$("#fBk").value.trim().toLowerCase(), ss=$("#fBkStatus").value;
+  const list=bks.map(b=>({...b,mk:mks.find(m=>m.id===b.mkId)})).filter(b=>(!ss||b.status===ss)&&(!q||[b.name,b.phone,normPhone(b.phone),b.mk&&b.mk.title].join(" ").toLowerCase().includes(q)))
+    .sort((a,b)=>(a.mk?a.mk.date:"9").localeCompare(b.mk?b.mk.date:"9")||(b.createdAt||"").localeCompare(a.createdAt||""));
+  $("#bkTable").innerHTML=`<tr><th>МК</th><th>Клиент</th><th>Телефон</th><th class="num">Чел.</th><th>Источник</th><th>Статус</th><th class="num">Сумма</th><th>Комментарий</th></tr>`+
+   (list.length?list.map(b=>`<tr class="clickable" data-bk="${esc(b.id)}"><td>${b.mk?`<b>${fmtDate(b.mk.date)}</b> ${esc(b.mk.title)}<br><small class="muted">${esc(studioOf(b.mk.studio).name)}</small>`:"<span class='muted'>МК не выбран</span>"}</td><td><b>${esc(b.name)}</b>${b.example?' <span class="chip">пример</span>':""}</td><td class="phone"><a href="tel:+${normPhone(b.phone)}" onclick="event.stopPropagation()">${esc(fmtPhone(b.phone))}</a></td><td class="num">${b.count||1}</td><td>${esc(b.source||"")}</td><td>${pill(BK_STATUS,b.status)}</td><td class="num">${b.mk?rub((b.count||1)*b.mk.price):""}${b.paid?`<br><small class="muted">внесено ${rub(b.paid)}</small>`:""}</td><td class="muted">${esc(b.comment||"")}</td></tr>`).join(""):`<tr><td colspan="8"><div class="empty">Записей пока нет</div></td></tr>`);
+}
+function renderClients(){
+  const q=$("#fCl").value.trim().toLowerCase(); const map={};
+  const add=(k,name,phone)=>map[k]=map[k]||{name,phone,total:0,came:0,cancel:0,leads:0,last:"",spend:0,list:[]};
+  for(const b of bks){const k=normPhone(b.phone)||b.name;if(!k)continue;const c=add(k,b.name,b.phone);c.total++;if(b.status==="came")c.came++;if(b.status==="cancel"||b.status==="noshow")c.cancel++;const mk=mks.find(m=>m.id===b.mkId);if(mk){if(mk.date>c.last)c.last=mk.date;if(ACTIVE_BK.has(b.status))c.spend+=(b.count||1)*mk.price;c.list.push(mk);}}
+  for(const l of leads){const k=normPhone(l.phone)||l.name;if(!k)continue;const c=add(k,l.name,l.phone);c.leads++;}
+  const list=Object.values(map).filter(c=>!q||[c.name,c.phone,normPhone(c.phone)].join(" ").toLowerCase().includes(q)).sort((a,b)=>b.last.localeCompare(a.last));
+  $("#clTable").innerHTML=`<tr><th>Клиент</th><th>Телефон</th><th class="num">Заявок</th><th class="num">Записей</th><th class="num">Пришёл</th><th class="num">Отмен</th><th>Последний МК</th><th class="num">Сумма</th></tr>`+
+   (list.length?list.map(c=>`<tr><td><b>${esc(c.name)}</b></td><td class="phone"><a href="tel:+${normPhone(c.phone)}">${esc(fmtPhone(c.phone))}</a></td><td class="num">${c.leads}</td><td class="num">${c.total}</td><td class="num">${c.came}</td><td class="num">${c.cancel}</td><td>${c.last?fmtDate(c.last)+" "+esc(c.list.sort((a,b)=>b.date.localeCompare(a.date))[0].title):"—"}</td><td class="num">${rub(c.spend)}</td></tr>`).join(""):`<tr><td colspan="8"><div class="empty">Клиенты появятся из заявок и записей</div></td></tr>`);
+}
+function taskHtml(t){return `<div class="task" data-mk="${esc(t.mk?t.mk.id:"")}" data-bk="${esc(t.bk?t.bk.id:"")}" data-lead="${esc(t.lead?t.lead.id:"")}"><div class="lvl ${t.lvl}"></div><div><b>${esc(t.title)}</b><small>${esc(t.sub)}</small></div></div>`;}
+function renderTasks(tasks){$("#tasksFull").innerHTML=tasks.length?tasks.map(taskHtml).join(""):`<div class="empty">Задач нет — всё под контролем</div>`;}
+function renderNotes(){
+  const ta=$("#noteText"); if(document.activeElement!==ta) ta.value=notes.text||"";
+  $("#quickLinks").innerHTML=(notes.links||[]).length?(notes.links||[]).map((l,i)=>`<div class="ql"><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title||l.url)}</a><button class="btn small ghost" data-dellink="${i}">✕</button></div>`).join(""):`<div class="muted" style="font-size:12px">Таблица студии, папка с референсами, чат педагогов, Canva…</div>`;
+  $("#upProject").innerHTML=assets?`<label class="btn small" style="display:inline-block">📎 загрузить<input type="file" multiple id="projUp" hidden></label>`:"";
+  $("#projectFiles").innerHTML=(notes.files||[]).length?(notes.files||[]).map(f=>fileHtml(f,"data-delprojfile")).join(""):`<div class="muted" style="font-size:12px">Регламенты, прайсы, макеты — чтобы были под рукой</div>`;
+}
+
+// ---------- карточка МК ----------
+function openMk(id){
+  const m=id?mks.find(x=>x.id===id):null; drawerMk=id;
+  const mk=m||{id:"",date:todayStr(),time:"13:00–16:00",title:"",age:"8+",price:3500,studio:"otr27",teacher:"",desc:"",status:"plan",links:{},notes:"",files:[]};
+  const st=studioOf(mk.studio), seats=seatsOf(mk), cap=capOf(mk);
+  const list=bks.filter(b=>b.mkId===mk.id).sort((a,b)=>(a.createdAt||"").localeCompare(b.createdAt||"")); const L=mk.links||{};
+  const scroll=$("#layer .drawer")?$("#layer .drawer").scrollTop:0;
+  $("#layer").innerHTML=`<div class="overlay" data-close></div><div class="drawer" role="dialog" aria-modal="true"><div class="drawer-in">
+    <div class="drawer-h"><div><div class="eyebrow">${m?fmtDate(mk.date)+" · "+dowOf(mk.date)+" · "+esc(mk.time):"Новый мастер-класс"}</div><h2>${esc(mk.title||"Без названия")}</h2></div><button class="btn ghost" data-close aria-label="Закрыть">✕</button></div>
+    ${m?`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px">${pill(MK_STATUS,mk.status||"plan")}<span class="chip num">${seats} / ${cap} мест</span><span class="chip num">${rub(revenueOf(mk))}</span><span class="chip">${esc(st.name)}</span></div>`:""}
+    <form id="mkForm" class="form">
+      <label>Дата<input name="date" type="date" value="${esc(mk.date)}" required></label>
+      <label>Время<input name="time" value="${esc(mk.time)}"></label>
+      <label class="full">Название<input name="title" value="${esc(mk.title)}" required placeholder="Картина маслом «…»"></label>
+      <label>Студия<select name="studio">${STUDIOS.map(s=>`<option value="${s.id}" ${s.id===mk.studio?"selected":""}>${esc(s.name)}</option>`).join("")}</select></label>
+      <label>Педагог<input name="teacher" value="${esc(mk.teacher)}" placeholder="фамилия"></label>
+      <label>Цена, ₽<input name="price" type="number" value="${esc(mk.price)}"></label>
+      <label>Возраст<input name="age" value="${esc(mk.age)}"></label>
+      <label>Мест<input name="capacity" type="number" value="${esc(mk.capacity||st.cap)}"></label>
+      <label>Статус<select name="status">${Object.entries(MK_STATUS).map(([k,[l]])=>`<option value="${k}" ${k===(mk.status||"plan")?"selected":""}>${l}</option>`).join("")}</select></label>
+      <label class="full">Описание для афиши<textarea name="desc">${esc(mk.desc)}</textarea></label>
+      <label>Референс (ссылка)<input name="l_ref" value="${esc(L.ref||"")}" placeholder="https://…"></label>
+      <label>Карточка-афиша<input name="l_card" value="${esc(L.card||"")}" placeholder="Canva / Figma / Диск"></label>
+      <label>Пост / анонс<input name="l_post" value="${esc(L.post||"")}" placeholder="vk.com/…"></label>
+      <label>Запись / оплата<input name="l_signup" value="${esc(L.signup||"")}" placeholder="timepad / форма"></label>
+      <label>Отчёт педагога<input name="l_report" value="${esc(L.report||"")}" placeholder="чат, фото работ"></label>
+      <label style="justify-content:flex-end"><span style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" name="materialsChecked" ${mk.materialsChecked?"checked":""} style="width:auto"> материалы проверены</span></label>
+      <label class="full">Заметки (перенос, причина отмены, договорённости)<textarea name="notes">${esc(mk.notes||"")}</textarea></label>
+      <div class="full" style="display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap">
+        <div style="display:flex;gap:8px">${m?`<button type="button" class="btn danger" id="delMk">Удалить</button>`:""}</div>
+        <div style="display:flex;gap:8px">${m?`<button type="button" class="btn" id="cancelMk">Отменить МК</button>`:""}<button class="btn primary" type="submit">Сохранить</button></div>
+      </div>
+    </form>
+    ${m?`<div class="section-t"><h3>Файлы · референсы, карточка, фото работ</h3>${assets?`<label class="btn small" style="display:inline-block">📎 загрузить<input type="file" multiple id="mkUp" hidden></label>`:`<span class="legend">загрузка — только редакторам</span>`}</div>
+    <div class="files">${(mk.files||[]).length?(mk.files||[]).map(f=>fileHtml(f,"data-delmkfile")).join(""):`<span class="muted" style="font-size:12px">Пока пусто. Сюда — картинку-референс для педагога, готовую карточку, потом фото работ.</span>`}</div>
+    <div class="section-t"><h3>Записи · ${seats} чел.</h3><button class="btn small primary" id="addBkHere">+ Запись</button></div>
+    ${list.length?list.map(b=>`<div class="book" data-bk="${esc(b.id)}">
+       <div><div class="who">${esc(b.name)} <span class="muted">· ${b.count||1} чел.</span>${b.example?' <span class="chip">пример</span>':""}</div>
+       <div class="meta"><a href="tel:+${normPhone(b.phone)}">${esc(fmtPhone(b.phone))}</a> · ${esc(b.source||"")}${b.paid?` · внесено ${rub(b.paid)}`:""}${b.comment?` · ${esc(b.comment)}`:""}</div></div>
+       <div style="display:flex;gap:6px;align-items:center"><select data-bkstatus="${esc(b.id)}">${Object.entries(BK_STATUS).map(([k,[l]])=>`<option value="${k}" ${k===b.status?"selected":""}>${l}</option>`).join("")}</select><button class="btn small" data-editbk="${esc(b.id)}">✎</button></div>
+     </div>`).join(""):`<div class="empty">Записей нет</div>`}
+    <div class="hist">${(mk.history||[]).slice(-8).reverse().map(h=>`<div>${new Date(h.t).toLocaleString("ru-RU",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})} — ${esc(h.text)}</div>`).join("")}</div>`:""}
+  </div></div>`;
+  $("#layer .drawer").scrollTop=scroll;
+  const f=$("#mkForm");
+  f.onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));
+    const obj={...mk,id:mk.id||("mk-"+d.date+"-"+genId()),date:d.date,time:d.time,title:d.title,studio:d.studio,teacher:d.teacher,price:+d.price,age:d.age,capacity:+d.capacity,status:d.status,desc:d.desc,notes:d.notes,materialsChecked:!!d.materialsChecked,links:{ref:d.l_ref,card:d.l_card,post:d.l_post,signup:d.l_signup,report:d.l_report}};
+    if(!m) obj.createdAt=new Date().toISOString();
+    const ok=await save("mk",obj,!m?"создан":(d.status!==(mk.status||"plan")?`статус → ${MK_STATUS[d.status][0]}`:"изменён")); if(ok&&!m) drawerMk=obj.id; };
+  const del=$("#delMk"); if(del) del.onclick=async()=>{ if(!confirm("Удалить мастер-класс? Записи останутся без МК.")) return; await delDoc("mk/"+mk.id); closeLayer(); };
+  const cm=$("#cancelMk"); if(cm) cm.onclick=async()=>{ const r=prompt("Причина отмены (сообщим записанным):"); if(r===null) return; await save("mk",{...mk,status:"cancel",notes:(mk.notes?mk.notes+"\n":"")+"Отмена: "+r},"отменён: "+r); };
+  const ab=$("#addBkHere"); if(ab) ab.onclick=()=>openBk(null,{mkId:mk.id});
+  const up=$("#mkUp"); if(up) up.onchange=async()=>{ const files=await uploadFiles(up.files); if(files.length) await save("mk",{...mk,files:[...(mk.files||[]),...files]},`файлы +${files.length}`); };
+  document.querySelectorAll("[data-delmkfile]").forEach(b=>b.onclick=async()=>{ if(!confirm("Убрать файл из карточки?")) return; const fid=b.dataset.delmkfile; await save("mk",{...mk,files:(mk.files||[]).filter(x=>x.id!==fid)},"файл убран"); try{ await assets.delete(fid); }catch(e){} });
+  document.querySelectorAll("[data-bkstatus]").forEach(s=>s.onchange=async()=>{const b=bks.find(x=>x.id===s.dataset.bkstatus);if(!b)return;await save("bookings",{...b,status:s.value},`статус → ${BK_STATUS[s.value][0]}`);});
+  document.querySelectorAll("[data-editbk]").forEach(b=>b.onclick=()=>openBk(b.dataset.editbk));
+}
+// ---------- запись ----------
+function openBk(id,pre){
+  const b=id?bks.find(x=>x.id===id):null; pre=pre||{};
+  const firstMk=(mks.filter(m=>daysTo(m.date)>=0&&m.status!=="cancel").sort((a,c)=>a.date.localeCompare(c.date))[0]||{}).id||"";
+  const bk=b||{id:"",mkId:pre.mkId||firstMk,name:pre.name||"",phone:pre.phone||"",count:pre.count||1,source:pre.source||"сайт",status:"new",paid:0,comment:pre.comment||"",leadId:pre.leadId||""};
+  const opts=mks.filter(m=>m.status!=="cancel").sort((a,c)=>a.date.localeCompare(c.date)).map(m=>`<option value="${esc(m.id)}" ${m.id===bk.mkId?"selected":""}>${fmtDate(m.date)} ${dowOf(m.date)} · ${esc(m.title)} · ${esc(studioOf(m.studio).name)} · свободно ${capOf(m)-seatsOf(m)}</option>`).join("");
+  const box=document.createElement("div"); box.className="modal"; box.innerHTML=`<div class="overlay" data-closemodal></div><div class="box">
+    <div class="drawer-h"><h2>${b?"Запись":"Новая запись"}</h2><button class="btn ghost" data-closemodal aria-label="Закрыть">✕</button></div>
+    <form id="bkForm" class="form">
+      <label class="full">Мастер-класс<select name="mkId" required>${opts}</select></label>
+      <label>Имя<input name="name" value="${esc(bk.name)}" required placeholder="Анна"></label>
+      <label>Телефон<input name="phone" value="${esc(bk.phone)}" required placeholder="+7 916 000-00-00" inputmode="tel"></label>
+      <label>Человек<input name="count" type="number" min="1" value="${esc(bk.count||1)}"></label>
+      <label>Источник<select name="source">${SOURCES.map(s=>`<option ${s===bk.source?"selected":""}>${s}</option>`).join("")}</select></label>
+      <label>Статус<select name="status">${Object.entries(BK_STATUS).map(([k,[l]])=>`<option value="${k}" ${k===bk.status?"selected":""}>${l}</option>`).join("")}</select></label>
+      <label>Внесено, ₽<input name="paid" type="number" value="${esc(bk.paid||0)}"></label>
+      <label class="full">Комментарий (сертификат, дети, пожелания, причина отмены)<textarea name="comment">${esc(bk.comment||"")}</textarea></label>
+      <div class="full" style="display:flex;justify-content:space-between;gap:8px">${b?`<button type="button" class="btn danger" id="delBk">Удалить</button>`:"<span></span>"}<button class="btn primary" type="submit">Сохранить</button></div>
+    </form></div>`;
+  document.body.appendChild(box);
+  box.querySelectorAll("[data-closemodal]").forEach(x=>x.onclick=()=>box.remove());
+  const f=box.querySelector("#bkForm");
+  f.onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));
+    const obj={...bk,id:bk.id||("bk-"+genId()),mkId:d.mkId,name:d.name.trim(),phone:d.phone.trim(),count:+d.count||1,source:d.source,status:d.status,paid:+d.paid||0,comment:d.comment};
+    delete obj.example; if(!b) obj.createdAt=new Date().toISOString();
+    const ok=await save("bookings",obj,!b?"создана":(d.status!==bk.status?`статус → ${BK_STATUS[d.status][0]}`:"изменена"));
+    if(ok&&obj.leadId){const l=leads.find(x=>x.id===obj.leadId); if(l) await save("leads",{...l,status:"booked",bookingId:obj.id},"записана на "+fmtDate((mks.find(m=>m.id===obj.mkId)||{}).date||""));}
+    box.remove(); };
+  const del=box.querySelector("#delBk"); if(del) del.onclick=async()=>{ if(!confirm("Удалить запись безвозвратно? Обычно лучше поставить «Отменена».")) return; await delDoc("bookings/"+bk.id); box.remove(); };
+}
+// ---------- заявка ----------
+function openLead(id){
+  const l=id?leads.find(x=>x.id===id):null;
+  const ld=l||{id:"",name:"",phone:"",handle:"",channel:"Telegram",guests:2,ages:"",occasion:"",wish:"",dates:"",district:"",budget:"",status:"new",comment:""};
+  const box=document.createElement("div"); box.className="modal"; box.innerHTML=`<div class="overlay" data-closemodal></div><div class="box">
+    <div class="drawer-h"><h2>${l?"Заявка":"Новая заявка"}</h2><button class="btn ghost" data-closemodal aria-label="Закрыть">✕</button></div>
+    <form id="leadForm" class="form">
+      <label>Имя<input name="name" value="${esc(ld.name)}" placeholder="Анна"></label>
+      <label>Телефон<input name="phone" value="${esc(ld.phone)}" placeholder="+7 …" inputmode="tel"></label>
+      <label>Ник / аккаунт<input name="handle" value="${esc(ld.handle)}" placeholder="@anna, vk.com/…"></label>
+      <label>Канал<select name="channel">${SOURCES.map(s=>`<option ${s===ld.channel?"selected":""}>${s}</option>`).join("")}</select></label>
+      <label>Гостей<input name="guests" type="number" min="1" value="${esc(ld.guests)}"></label>
+      <label>Возраст / состав<input name="ages" value="${esc(ld.ages)}" placeholder="взрослые / дети 8–10 / семья"></label>
+      <label>Повод<input name="occasion" value="${esc(ld.occasion)}" placeholder="ДР, девичник, просто"></label>
+      <label>Район / метро<input name="district" value="${esc(ld.district)}" placeholder="Отрадное"></label>
+      <label>Желаемые даты<input name="dates" value="${esc(ld.dates)}" placeholder="19.09, выходные, вечер"></label>
+      <label>Бюджет / сертификат<input name="budget" value="${esc(ld.budget)}"></label>
+      <label class="full">Пожелание (формат, сюжет, «как на картинке»)<textarea name="wish">${esc(ld.wish)}</textarea></label>
+      <label>Статус<select name="status">${Object.entries(LEAD_STATUS).map(([k,[t]])=>`<option value="${k}" ${k===ld.status?"selected":""}>${t}</option>`).join("")}</select></label>
+      <label>Комментарий<input name="comment" value="${esc(ld.comment)}"></label>
+      <div class="full" style="display:flex;justify-content:space-between;gap:8px">${l?`<button type="button" class="btn danger" id="delLead">Удалить</button>`:"<span></span>"}<button class="btn primary" type="submit">Сохранить</button></div>
+    </form></div>`;
+  document.body.appendChild(box);
+  box.querySelectorAll("[data-closemodal]").forEach(x=>x.onclick=()=>box.remove());
+  const f=box.querySelector("#leadForm");
+  f.onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));
+    const obj={...ld,...d,id:ld.id||("lead-"+genId()),guests:+d.guests||1}; if(!l) obj.createdAt=new Date().toISOString();
+    if(!obj.suggested||!obj.suggested.length) obj.suggested=suggestFor(obj).map(s=>s.m.id);
+    await save("leads",obj,!l?"создана":(d.status!==ld.status?`статус → ${LEAD_STATUS[d.status][0]}`:"изменена")); box.remove(); };
+  const del=box.querySelector("#delLead"); if(del) del.onclick=async()=>{ if(!confirm("Удалить заявку? Обычно лучше «Отказ».")) return; await delDoc("leads/"+ld.id); box.remove(); };
+}
+function closeLayer(){$("#layer").innerHTML="";drawerMk=null;}
+function zoom(src){const l=document.createElement("div");l.className="lightbox";l.innerHTML=`<img src="${esc(src)}" alt="">`;l.onclick=()=>l.remove();document.body.appendChild(l);}
+
+// ---------- блокнот ----------
+$("#noteText").addEventListener("input",()=>{ $("#noteState").textContent="печатаешь…"; clearTimeout(noteTimer); noteTimer=setTimeout(async()=>{ await saveNotes({text:$("#noteText").value}); $("#noteState").textContent="сохранено "+new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"}); },900); });
+$("#addLink").onclick=async()=>{ const url=prompt("Ссылка:"); if(!url) return; const title=prompt("Название:",url)||url; await saveNotes({links:[...(notes.links||[]),{title,url}]},"Добавлено"); };
+
+// ---------- экспорт ----------
+async function exportCsv(){
+  if(!downloads) return;
+  const head=["Дата","МК","Студия","Педагог","Клиент","Телефон","Чел.","Источник","Статус","Внесено","Комментарий","Создана"];
+  const rows=bks.map(b=>{const m=mks.find(x=>x.id===b.mkId)||{};return [m.date||"",m.title||"",studioOf(m.studio).name,m.teacher||"",b.name,fmtPhone(b.phone),b.count||1,b.source||"",(BK_STATUS[b.status]||[b.status])[0],b.paid||0,b.comment||"",b.createdAt||""];});
+  const csv="﻿"+[head,...rows].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(";")).join("\n");
+  try{ await downloads.save({filename:`записи-мк-${todayStr()}.csv`,data:csv}); }catch(e){ if(e&&e.code!=="cancelled") toast("Не удалось сохранить"); }
+}
+
+// ---------- события ----------
+function setTab(t){document.querySelectorAll("#nav [role=tab]").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));document.querySelectorAll("main > section").forEach(s=>s.hidden=s.id!=="tab-"+t);try{localStorage.setItem("mkhub.tab",t);}catch(e){}}
+$("#nav").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(b)setTab(b.dataset.tab);});
+document.addEventListener("click",async e=>{
+  const z=e.target.closest("[data-zoom]"); if(z){zoom(z.dataset.zoom);return;}
+  const go=e.target.closest("[data-go]"); if(go){setTab(go.dataset.go);return;}
+  if(e.target.closest("[data-close]")){closeLayer();return;}
+  const lb=e.target.closest("[data-leadbook]"); if(lb){const l=leads.find(x=>x.id===lb.dataset.leadbook); if(l){ if(lb.dataset.mkpick&&l.status==="new"){await save("leads",{...l,status:"offered",suggested:[...new Set([lb.dataset.mkpick,...(l.suggested||[])])]},"предложен МК "+fmtDate((mks.find(m=>m.id===lb.dataset.mkpick)||{}).date||""));} openBk(null,{mkId:lb.dataset.mkpick||"",name:l.name,phone:l.phone,count:l.guests,source:l.channel,comment:[l.occasion,l.ages,l.wish].filter(Boolean).join(" · "),leadId:l.id}); } return;}
+  const le=e.target.closest("[data-leadedit]"); if(le){openLead(le.dataset.leadedit);return;}
+  const bkRow=e.target.closest("tr[data-bk]"); if(bkRow){openBk(bkRow.dataset.bk);return;}
+  const task=e.target.closest(".task"); if(task){ if(task.dataset.lead){setTab("leads");const c=document.querySelector(`[data-leadcard="${task.dataset.lead}"]`);if(c)c.scrollIntoView({behavior:"smooth",block:"center"});} else if(task.dataset.bk) openBk(task.dataset.bk); else if(task.dataset.mk) openMk(task.dataset.mk); return; }
+  const dl=e.target.closest("[data-dellink]"); if(dl){const links=[...(notes.links||[])];links.splice(+dl.dataset.dellink,1);await saveNotes({links},"Убрано");return;}
+  const dpf=e.target.closest("[data-delprojfile]"); if(dpf){ if(!confirm("Убрать файл?")) return; const fid=dpf.dataset.delprojfile; await saveNotes({files:(notes.files||[]).filter(x=>x.id!==fid)},"Убрано"); try{ await assets.delete(fid); }catch(err){} return; }
+  const mkd=e.target.closest(".mkd[data-mk]"); if(mkd){openMk(mkd.dataset.mk);return;}
+  const row=e.target.closest(".row[data-mk]"); if(row){openMk(row.dataset.mk);return;}
+});
+document.addEventListener("change",async e=>{
+  const ls=e.target.closest("[data-leadstatus]"); if(ls){const l=leads.find(x=>x.id===ls.dataset.leadstatus); if(l) await save("leads",{...l,status:ls.value},`статус → ${LEAD_STATUS[ls.value][0]}`); return;}
+  const sh=e.target.closest("[data-leadshot]"); if(sh&&sh.files.length){const l=leads.find(x=>x.id===sh.dataset.leadshot); const f=await uploadFiles(sh.files); if(l&&f.length) await save("leads",{...l,screenshot:f[0].id},"скрин добавлен"); return;}
+  if(e.target.id==="projUp"){const f=await uploadFiles(e.target.files); if(f.length) await saveNotes({files:[...(notes.files||[]),...f]},"Загружено"); return;}
+  if(e.target.id==="gMonth") renderGrid();
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeLayer();document.querySelectorAll(".modal,.lightbox").forEach(m=>m.remove());}});
+$("#addMk").onclick=()=>openMk(null);
+$("#addBk").onclick=()=>openBk(null);
+$("#addLead").onclick=()=>openLead(null);
+$("#exportCsv").onclick=exportCsv;
+["#fMk","#fStudio","#fStatus","#fPast"].forEach(s=>$(s).addEventListener("input",renderMk));
+["#fBk","#fBkStatus"].forEach(s=>$(s).addEventListener("input",renderBookings));
+["#fLead","#fLeadStatus"].forEach(s=>$(s).addEventListener("input",renderLeads));
+$("#fCl").addEventListener("input",renderClients);
+
+fillSelects();
+try{const t=localStorage.getItem("mkhub.tab");if(t)setTab(t);}catch(e){}
+render(); renderNotes();
+connect();
+})();
+</script>
+</body></html>
